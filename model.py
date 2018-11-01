@@ -1,7 +1,5 @@
-#classes.py
-
 from abc import ABCMeta, abstractmethod
-
+from interface import *
 class TiendaMusical:
 	def __init__(self):
 		self.nombre = "BulletSong"
@@ -27,7 +25,7 @@ class Cliente(Persona):
 		self.ruc = ruc
 
 	def __str__(self):
-		return super().__str__() + " RUC: " + self.ruc
+		return "Cliente:"+super().__str__() + " RUC: " + self.ruc
 
 class Empleado(Persona):
 	'''Clase para empleados. Solo cobran salario fijo. Hereda de Persona'''
@@ -35,14 +33,21 @@ class Empleado(Persona):
 		super().__init__(*args)
 		self.fechaContrato = fechaContrato
 		self.salario = salario
-	def __str__():
-		return super().__str__() + " Contratado el: " + self.fechaContrato
+	def calculo_salario(self):
+		return self.salario
+
+	def __str__(self):
+		return super().__str__() + " Contratado el: " + self.fechaContrato +"  Salario: " + str(self.salario)
 
 class EmpleadoVendedor(Empleado):
 	'''Clase para vendedores. Los vendedores cobran una comision por venta ademas de su salario. Hereda de Empleado'''
 	def __init__(self, comision, *args):
 		super().__init__(*args)
 		self.comision = comision
+
+	def calculo_salario(self):
+		return super().salario + super().salario*comision
+
 	def __str__(self):
 		return super().__str__() + " Comision: " + self.comision
 
@@ -51,8 +56,12 @@ class EmpleadoBonificacion(Empleado):
 	def __init__(self,bonificacion,*args):
 		super().__init__(*args)
 		self.bonificacion = bonificacion
+
+	def calculo_salario(self):
+		return super().calculo_salario() + self.bonificacion
+
 	def __str__(self):
-		return super().__str__() + " Bonificaion: " + self.bonificacion
+		return super().__str__() + " Bonificacion: " + str(self.bonificacion)
 
 class Producto(metaclass=ABCMeta):
 	'''Clase abstracta para productos'''
@@ -64,9 +73,9 @@ class Producto(metaclass=ABCMeta):
 		self.descripcion = descripcion
 		self.nombre = nombre
 	def __str__(self):
-		return self.categoria+" "+self.marca+" "+self.nombre+"\n"+descripcion
+		return self.categoria+" "+self.marca+" "+self.nombre+"\n\t"+self.descripcion
 
-class Accesorio(Producto):
+class Accesorio(Producto, Vendible):
 	'''Clase para Accesorio. productos que solo se pueden vender. Hereda de Producto'''
 	def __init__(self, *args):
 		super().__init__(*args)
@@ -74,7 +83,7 @@ class Accesorio(Producto):
 	def __str__(self):
 		return "Accesorio: "+super().__str__()
 
-class Repuesto(Producto):
+class Repuesto(Producto, Vendible):
 	'''Clase para Repuesto. productos que solo se pueden vender. Hereda de Producto'''
 	def __init__(self, *args):
 		super().__init__(*args)
@@ -82,10 +91,16 @@ class Repuesto(Producto):
 	def __str__(self):
 		return "Repuesto: "+super().__str__()
 
-class Instrumento(Producto, metaclass=ABCMeta):
+class Instrumento(Producto, Alquilable, Vendible, metaclass=ABCMeta):
 	'''Clase Abstracta para Instrumentos. Hereda de Producto'''
 	def __init__(self, *args):
 		super().__init__(*args)
+
+	def alquilar(self):
+		return "Alquilado"
+
+	def vender(self):
+		return "vendido"
 
 class InstrumentoCuerda(Instrumento):
 	'''Clase para InstrumentoCuerda. Tipos de Instrumentos. Hereda de Instrumento'''
