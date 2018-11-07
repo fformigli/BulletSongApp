@@ -1,12 +1,12 @@
-#from model import Model
-#from view import View
+from model import *
+from view import *
 
 
-class Controller:
+class ClienteController:
     def __init__(self):
-        self.model = Model()
         self.view = View()
 
-    def agregar_persona(self):
-        persona = self.view.vistaAgregarPersona()
-        self.model.guardarPersona(persona)
+    def agregar(self):
+        cliente = self.view.view_agregar_cliente()
+        print(cliente)
+        #self.model.guardarPersona(cliente)
