@@ -7,6 +7,17 @@ class Application:
 	
 	@staticmethod
 	def main():
+		"""Metodo principal de la aplicacion"""
+		test()
+
+	@staticmethod
+	def menu():
+		"""Menu para uso de la aplicacion"""
+		print("Menu")
+
+	@staticmethod
+	def test():
+		"""ejecucion para pruebas"""
 		print("testing")
 		cliente = Cliente("1043894-7",1,"Edilda","Formigli","1043894", "CI", "021212121", "1965/05/29")
 		print(cliente)
@@ -19,7 +30,6 @@ class Application:
 		print(instrumentoCuerda)
 
 		print(instrumentoCuerda.alquilar())
-
 
 
 if __name__ == '__main__':

@@ -97,7 +97,7 @@ class Instrumento(Producto, Alquilable, Vendible, metaclass=ABCMeta):
 		super().__init__(*args)
 
 	def alquilar(self):
-		return "Alquilado"
+		return 10000 + super().multa
 
 	def vender(self):
 		return "vendido"
