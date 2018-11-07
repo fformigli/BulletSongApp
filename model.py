@@ -123,16 +123,11 @@ class Instrumento(Producto, Alquilable, Vendible, metaclass=ABCMeta):
     def __init__(self, *args):
         super().__init__(*args)
 
-<<<<<<< HEAD
 	def alquilar(self):
 		return 10000 + super().multa
-=======
-    def alquilar(self):
-        return "Alquilado"
 
     def vender(self):
         return "vendido"
->>>>>>> f2054404351b03c9f8c827c6ca90d64d86b5f6c8
 
 
 class InstrumentoCuerda(Instrumento):

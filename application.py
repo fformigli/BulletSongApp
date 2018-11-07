@@ -2,7 +2,6 @@ from model import Cliente, EmpleadoBonificacion, InstrumentoCuerda
 
 
 class Application:
-<<<<<<< HEAD
 	'''Aplicacion para gestion de una tienda musical'''
 	
 	@staticmethod
@@ -21,9 +20,6 @@ class Application:
 		print("testing")
 		cliente = Cliente("1043894-7",1,"Edilda","Formigli","1043894", "CI", "021212121", "1965/05/29")
 		print(cliente)
-=======
-    '''Aplicacion para gestion de una tienda musical'''
->>>>>>> f2054404351b03c9f8c827c6ca90d64d86b5f6c8
 
     @staticmethod
     def main():
