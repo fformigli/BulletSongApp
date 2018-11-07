@@ -2,15 +2,14 @@ from abc import ABCMeta, abstractmethod
 
 
 class Alquilable(metaclass=ABCMeta):
-	'''Interface para productos alquilables'''
-	
-	# atributos alquilable
-	multa = 10000
+    """Interface para productos alquilables"""
 
+    # atributos alquilable
+    multa = 10000
 
-	@abstractmethod
-	def alquilar(self):
-		pass
+    @abstractmethod
+    def alquilar(self):
+        pass
 
 
 class Vendible(metaclass=ABCMeta):

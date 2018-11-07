@@ -9,4 +9,4 @@ class ClienteController:
     def agregar(self):
         cliente = self.view.view_agregar_cliente()
         print(cliente)
-        #self.model.guardarPersona(cliente)
+    #    self.model.guardarPersona(cliente)
