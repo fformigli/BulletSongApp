@@ -1,8 +1,8 @@
-#Application : clase principal
+from model import Cliente, EmpleadoBonificacion, InstrumentoCuerda
 
-from model import Cliente,EmpleadoBonificacion,InstrumentoCuerda
 
 class Application:
+<<<<<<< HEAD
 	'''Aplicacion para gestion de una tienda musical'''
 	
 	@staticmethod
@@ -21,16 +21,26 @@ class Application:
 		print("testing")
 		cliente = Cliente("1043894-7",1,"Edilda","Formigli","1043894", "CI", "021212121", "1965/05/29")
 		print(cliente)
+=======
+    '''Aplicacion para gestion de una tienda musical'''
+>>>>>>> f2054404351b03c9f8c827c6ca90d64d86b5f6c8
 
-		empleadoBonificacion = EmpleadoBonificacion(250000,"24/08/2010",3000000,25,"Fernando","Formigli","5088536","CI","0983265381","1995/01/01")
-		print(empleadoBonificacion)
-		print("El salario de este empleado es: "+str(empleadoBonificacion.calculo_salario()))
+    @staticmethod
+    def main():
+        print("testing")
+        cliente = Cliente("1043894-7", 1, "Edilda", "Formigli", "1043894", "CI", "021212121", "1965/05/29")
+        print(cliente)
 
-		instrumentoCuerda = InstrumentoCuerda(6,1,"Fender",6,"Guitarra Electica","ideal para jazz","Stratocaster")
-		print(instrumentoCuerda)
+        empleado_bonificacion = EmpleadoBonificacion(250000, "24/08/2010", 3000000, 25, "Fernando", "Formigli",
+                                                     "5088536", "CI", "0983265381", "1995/01/01")
+        print(empleado_bonificacion)
+        print("El salario de este empleado es: " + str(empleado_bonificacion.calculo_salario()))
 
-		print(instrumentoCuerda.alquilar())
+        instrumento_cuerda = InstrumentoCuerda(6, 1, "Fender", 6, "Guitarra Electica", "ideal para jazz",
+                                               "Stratocaster")
+        print(instrumento_cuerda)
 
+        print(instrumento_cuerda.alquilar())
 
 if __name__ == '__main__':
-     Application.main()
+    Application.main()
