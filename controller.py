@@ -15,3 +15,7 @@ class ClienteController:
         lista_clientes = self.cliente.view_all()
         self.view.view_all_clientes(lista_clientes)
         return lista_clientes
+
+    def delete(self):
+        # TODO: eliminar clientes
+        pass
