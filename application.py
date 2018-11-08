@@ -15,7 +15,9 @@ class Application:
     def main():
         """Menu para uso de la aplicacion"""
         cliente_controller = ClienteController()
-        cliente_controller.agregar()
+        # cliente_controller.add()
+        cliente_controller.view_all()
+
 
     @staticmethod
     def test():

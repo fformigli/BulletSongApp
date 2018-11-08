@@ -1,4 +1,5 @@
 from interface import *
+import pickle
 
 
 class TiendaMusical:
@@ -24,6 +25,37 @@ class Persona(metaclass=ABCMeta):
 
 class Cliente(Persona):
     """Clase que representa a los Clientes de la tienda. Hereda Persona"""
+
+    @staticmethod
+    def save(cliente):
+        result = []
+        try:
+            archivo = open('cliente.pickle', 'rb')
+            result = pickle.load(archivo)
+            archivo.close()
+            file = open('cliente.pickle', 'wb')
+            result.append(cliente)
+            pickle.dump(result, file)
+            file.close()
+        except IOError:
+            # TODO: propagar correctamente
+            file = open('cliente.pickle', 'wb')
+            result.append(cliente)
+            pickle.dump(result, file)
+            file.close()
+        return
+
+    @staticmethod
+    def view_all():
+        result = []
+        try:
+            file = open('cliente.pickle', 'rb')
+            result = pickle.load(file)
+            file.close()
+            return result
+        except IOError:
+            # TODO: propagar correctamente
+            return result
 
     def __init__(self, ruc, *args):
         super().__init__(*args)
