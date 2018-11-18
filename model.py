@@ -11,16 +11,16 @@ class Persona(metaclass=ABCMeta):
     """Clase abstracta datos basicos de personas"""
 
     def __init__(self, id_persona, nombre, apellido, nro_documento, tipo_documento, nro_telefono, fecha_nacimiento):
-        self.idPersona = id_persona
+        self.id_persona = id_persona
         self.nombre = nombre
         self.apellido = apellido
-        self.nroDocumento = nro_documento
-        self.tipoDocumento = tipo_documento
-        self.nroTelefono = nro_telefono
-        self.fechaNacimiento = fecha_nacimiento
+        self.nro_documento = nro_documento
+        self.tipo_documento = tipo_documento
+        self.nro_telefono = nro_telefono
+        self.fecha_nacimiento = fecha_nacimiento
 
     def __str__(self):
-        return "(" + self.nroDocumento + ") " + self.nombre + " " + self.apellido
+        return "COD: " + self.id_persona + " (" + self.nro_documento + ") " + self.nombre.upper() + " " + self.apellido.upper()
 
 
 class Cliente(Persona):
@@ -46,6 +46,17 @@ class Cliente(Persona):
         return
 
     @staticmethod
+    def search_all(target):
+        result = []
+        lista_clientes = Cliente.list_all()
+        if lista_clientes:
+            for cliente in lista_clientes:
+                if target.lower() in cliente.__str__().lower():
+                    result.append(cliente)
+
+        return result
+
+    @staticmethod
     def list_all():
         result = []
         try:
@@ -57,23 +68,12 @@ class Cliente(Persona):
             # TODO: propagar correctamente
             return result
 
-    @staticmethod
-    def search_all(target):
-        result = []
-        lista_clientes = Cliente.list_all()
-        if lista_clientes:
-            for cliente in lista_clientes:
-                if target.lower() in cliente.__str__().lower():
-                    result.append(cliente)
-
-        return result
-
     def __init__(self, ruc, *args):
         super().__init__(*args)
         self.ruc = ruc
 
     def __str__(self):
-        return "Cliente:" + super().__str__() + " RUC: " + self.ruc
+        return "Cliente: " + super().__str__() + " RUC: " + self.ruc
 
 
 class Empleado(Persona):
@@ -81,14 +81,45 @@ class Empleado(Persona):
 
     def __init__(self, fecha_contrato, salario, *args):
         super().__init__(*args)
-        self.fechaContrato = fecha_contrato
+        self.fecha_contrato = fecha_contrato
         self.salario = salario
 
     def calculo_salario(self):
-        return self.salario
+        return int(self.salario)
+
+    @staticmethod
+    def save(empleado):
+        result = []
+        try:
+            archivo = open('empleado.pickle', 'rb')
+            result = pickle.load(archivo)
+            archivo.close()
+            file = open('empleado.pickle', 'wb')
+            result.append(empleado)
+            pickle.dump(result, file)
+            file.close()
+        except IOError:
+            # TODO: propagar correctamente
+            file = open('empleado.pickle', 'wb')
+            result.append(empleado)
+            pickle.dump(result, file)
+            file.close()
+        return
+
+    @staticmethod
+    def list_all():
+        result = []
+        try:
+            file = open('empleado.pickle', 'rb')
+            result = pickle.load(file)
+            file.close()
+            return result
+        except IOError:
+            # TODO: propagar correctamente
+            return result
 
     def __str__(self):
-        return super().__str__() + " Contratado el: " + self.fechaContrato + "  Salario: " + str(self.salario)
+        return super().__str__() + " Contratado el: " + self.fecha_contrato + "  Salario: " + str(self.salario)
 
 
 class EmpleadoVendedor(Empleado):
@@ -99,13 +130,13 @@ class EmpleadoVendedor(Empleado):
         self.comision = comision
 
     def calculo_salario(self):
-        return super().salario + super().salario * self.comision
+        return int(super().salario) + int(super().salario) * int(self.comision)
 
     def __str__(self):
         return super().__str__() + " Comision: " + self.comision
 
 
-class EmpleadoBonificacion(Empleado):
+class EmpleadoBonificado(Empleado):
     """Clase para empleados con bonificacion (por ejemplo por exposicion a riesgos). Hereda de Empleado"""
 
     def __init__(self, bonificacion, *args):
@@ -113,7 +144,38 @@ class EmpleadoBonificacion(Empleado):
         self.bonificacion = bonificacion
 
     def calculo_salario(self):
-        return super().calculo_salario() + self.bonificacion
+        return int(super().calculo_salario()) + int(self.bonificacion)
+
+    @staticmethod
+    def list_all():
+        result = []
+        try:
+            file = open('empleado_bonificado.pickle', 'rb')
+            result = pickle.load(file)
+            file.close()
+            return result
+        except IOError:
+            # TODO: propagar correctamente
+            return result
+
+    @staticmethod
+    def save(empleado):
+        result = []
+        try:
+            archivo = open('empleado_bonificado.pickle', 'rb')
+            result = pickle.load(archivo)
+            archivo.close()
+            file = open('empleado_bonificado.pickle', 'wb')
+            result.append(empleado)
+            pickle.dump(result, file)
+            file.close()
+        except IOError:
+            # TODO: propagar correctamente
+            file = open('empleado_bonificado.pickle', 'wb')
+            result.append(empleado)
+            pickle.dump(result, file)
+            file.close()
+        return
 
     def __str__(self):
         return super().__str__() + " Bonificacion: " + str(self.bonificacion)
@@ -123,7 +185,7 @@ class Producto(metaclass=ABCMeta):
     """Clase abstracta para productos"""
 
     def __init__(self, id_producto, marca, stock, categoria, descripcion, nombre):
-        self.idProducto = id_producto
+        self.id_producto = id_producto
         self.marca = marca
         self.stock = stock
         self.categoria = categoria
@@ -178,7 +240,7 @@ class InstrumentoCuerda(Instrumento):
 
     def __init__(self, cantidad_cuerdas, *args):
         super().__init__(*args)
-        self.cantidadCuerdas = cantidad_cuerdas
+        self.cantidad_cuerdas = cantidad_cuerdas
 
     def __str__(self):
         return "Instrumento de Cuerda: " + super().__str__()

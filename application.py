@@ -1,60 +1,65 @@
 #!/usr/bin/python
 
-from model import Cliente, EmpleadoBonificacion, InstrumentoCuerda
-from controller import ClienteController
-import tkinter
+from model import Cliente, EmpleadoBonificado, InstrumentoCuerda
+from controller import ClienteController, EmpleadoController, EmpleadoBonificadoController
 
 
 class Application:
     """Aplicacion para gestion de una tienda musical"""
 
     def __init__(self):
-        self.main()
+        self.menu()
 
     @staticmethod
-    def main():
+    def menu():
         """Menu para uso de la aplicacion"""
-        print("Menu:\n")
 
-        options = ["Ver Clientes", "Agregar Cliente", "Buscar en Clientes"]
+        index = -1
+        while index != "0":
+            print("Menu:\n")
 
-        for option in options:
-            print(option)
+            options = ["Ver Clientes", "Agregar Cliente", "Buscar en Clientes", "Agregar Empleado",
+                       "Agregar Empleado con Bonificacion", "Calcular Salarios"]
 
+            c = 0
+            for option in options:
+                c += 1
+                print(str(c) + ".- " + option)
 
+            print("0.- Salir")
+
+            index = input("Introduzca el numero de operacion que quiere realizar:\n")
+            cliente_controller = ClienteController()
+            empleado_controller = EmpleadoController()
+            empleado_bonificado_controller = EmpleadoBonificadoController()
+
+            if index == "1":
+                cliente_controller.view_all()
+            elif index == "2":
+                cliente_controller.add()
+            elif index == "3":
+                cliente_controller.search_all()
+
+            elif index == "4":
+                empleado_controller.add()
+            elif index == "5":
+                empleado_bonificado_controller.add()
+            elif index == "6":
+                empleado_controller.view_salarios()
+                empleado_bonificado_controller.view_salarios()
 
     @staticmethod
-    def test():
-        """ejecucion para pruebas"""
-        print("testing")
+    def cargar_listas():
         cliente = Cliente("1043894-7", 1, "Edilda", "Formigli", "1043894", "CI", "021212121", "1965/05/29")
-        print(cliente)
+        cliente.save(cliente)
 
-        empleado_bonificacion = EmpleadoBonificacion(250000, "24/08/2010", 3000000, 25, "Fernando", "Formigli",
-                                                     "5088536", "CI", "0983265381", "1995/01/01")
-        print(empleado_bonificacion)
-        print("El salario de este empleado es: " + str(empleado_bonificacion.calculo_salario()))
+        empleado_bonificacion = EmpleadoBonificado(250000, "24/08/2010", 3000000, 25, "Fernando", "Formigli",
+                                                   "5088536", "CI", "0983265381", "1995/01/01")
+        empleado_bonificacion.save(empleado_bonificacion)
 
         instrumento_cuerda = InstrumentoCuerda(6, 1, "Fender", 6, "Guitarra Electica", "ideal para jazz",
                                                "Stratocaster")
-        print(instrumento_cuerda)
-
-        print(instrumento_cuerda.alquilar())
-
-
-class GApplication:
-    """Interfaz grafica de la Aplicacion"""
-
-    def __init__(self):
-        self.main = tkinter.Tk()
-        self.main.title("BulletSongApp")
-        self.main.minsize(720, 300)
-
-        label = tkinter.Label(self.main, text="testing some label in main window")
-        label.pack()
 
 
 if __name__ == '__main__':
     Application()
-# gapp = GApplication()
-# gapp.main.mainloop()
