@@ -14,9 +14,13 @@ class Application:
     @staticmethod
     def main():
         """Menu para uso de la aplicacion"""
-        cliente_controller = ClienteController()
-        # cliente_controller.add()
-        cliente_controller.view_all()
+        print("Menu:\n")
+
+        options = ["Ver Clientes", "Agregar Cliente", "Buscar en Clientes"]
+
+        for option in options:
+            print(option)
+
 
 
     @staticmethod

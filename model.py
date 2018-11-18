@@ -46,7 +46,7 @@ class Cliente(Persona):
         return
 
     @staticmethod
-    def view_all():
+    def list_all():
         result = []
         try:
             file = open('cliente.pickle', 'rb')
@@ -56,6 +56,17 @@ class Cliente(Persona):
         except IOError:
             # TODO: propagar correctamente
             return result
+
+    @staticmethod
+    def search_all(target):
+        result = []
+        lista_clientes = Cliente.list_all()
+        if lista_clientes:
+            for cliente in lista_clientes:
+                if target.lower() in cliente.__str__().lower():
+                    result.append(cliente)
+
+        return result
 
     def __init__(self, ruc, *args):
         super().__init__(*args)
