@@ -4,8 +4,9 @@ from abc import ABCMeta, abstractmethod
 class Alquilable(metaclass=ABCMeta):
     """Interface para productos alquilables"""
 
-    def __init__(self, precio_alquiler):
-        self.multa = 10000
+    def __init__(self, precio_alquiler, plazo_alquiler, multa):
+        self.multa = multa
+        self.plazo_alquiler = plazo_alquiler
         self.precio_alquiler = precio_alquiler
 
     @abstractmethod

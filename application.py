@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from model import Cliente, EmpleadoBonificado, InstrumentoCuerda
-from controller import ClienteController, EmpleadoController, EmpleadoBonificadoController
+from controller import ClienteController, EmpleadoController, EmpleadoBonificadoController, EmpleadoVendedorController, InstrumentoCuerdaController
 
 
 class Application:
@@ -19,7 +19,7 @@ class Application:
             print("Menu:\n")
 
             options = ["Ver Clientes", "Agregar Cliente", "Buscar en Clientes", "Agregar Empleado",
-                       "Agregar Empleado con Bonificacion", "Calcular Salarios"]
+                       "Agregar Empleado con Bonificacion", "Agregar Vendedor", "Calcular Salarios", "Agregar Instrumento de Cuerdas", "Ver todos los productos"]
 
             c = 0
             for option in options:
@@ -32,6 +32,8 @@ class Application:
             cliente_controller = ClienteController()
             empleado_controller = EmpleadoController()
             empleado_bonificado_controller = EmpleadoBonificadoController()
+            empleado_vendedor_controller = EmpleadoVendedorController()
+            instrumento_cuerda_controller = InstrumentoCuerdaController()
 
             if index == "1":
                 cliente_controller.view_all()
@@ -45,8 +47,15 @@ class Application:
             elif index == "5":
                 empleado_bonificado_controller.add()
             elif index == "6":
+                empleado_vendedor_controller.add()
+            elif index == "7":
                 empleado_controller.view_salarios()
                 empleado_bonificado_controller.view_salarios()
+                empleado_vendedor_controller.view_salarios()
+            elif index == "8":
+                instrumento_cuerda_controller.add()
+            elif index == "9":
+                instrumento_cuerda_controller.view_all()
 
     @staticmethod
     def cargar_listas():

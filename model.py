@@ -85,7 +85,10 @@ class Empleado(Persona):
         self.salario = salario
 
     def calculo_salario(self):
-        return int(self.salario)
+        return "Asalariado\t"+str(int(self.salario))
+
+    def salario(self):
+        return self.salario
 
     @staticmethod
     def save(empleado):
@@ -130,7 +133,38 @@ class EmpleadoVendedor(Empleado):
         self.comision = comision
 
     def calculo_salario(self):
-        return int(super().salario) + int(super().salario) * int(self.comision)
+        return "Vendedor\t"+str(int(int(super().salario()) + int(super().salario()) * int(self.comision)/100))
+
+    @staticmethod
+    def list_all():
+        result = []
+        try:
+            file = open('empleado_vendedor.pickle', 'rb')
+            result = pickle.load(file)
+            file.close()
+            return result
+        except IOError:
+            # TODO: propagar correctamente
+            return result
+
+    @staticmethod
+    def save(empleado):
+        result = []
+        try:
+            archivo = open('empleado_vendedor.pickle', 'rb')
+            result = pickle.load(archivo)
+            archivo.close()
+            file = open('empleado_vendedor.pickle', 'wb')
+            result.append(empleado)
+            pickle.dump(result, file)
+            file.close()
+        except IOError:
+            # TODO: propagar correctamente
+            file = open('empleado_vendedor.pickle', 'wb')
+            result.append(empleado)
+            pickle.dump(result, file)
+            file.close()
+        return
 
     def __str__(self):
         return super().__str__() + " Comision: " + self.comision
@@ -144,7 +178,7 @@ class EmpleadoBonificado(Empleado):
         self.bonificacion = bonificacion
 
     def calculo_salario(self):
-        return int(super().calculo_salario()) + int(self.bonificacion)
+        return "Bonificado\t" + str(int(super().salario()) + int(self.bonificacion))
 
     @staticmethod
     def list_all():
@@ -181,10 +215,11 @@ class EmpleadoBonificado(Empleado):
         return super().__str__() + " Bonificacion: " + str(self.bonificacion)
 
 
-class Producto(metaclass=ABCMeta):
+class Producto(Vendible, metaclass=ABCMeta):
     """Clase abstracta para productos"""
 
-    def __init__(self, id_producto, marca, stock, categoria, descripcion, nombre):
+    def __init__(self, id_producto, marca, stock, categoria, descripcion, nombre, precio_venta):
+        super().__init__(precio_venta)
         self.id_producto = id_producto
         self.marca = marca
         self.stock = stock
@@ -196,7 +231,7 @@ class Producto(metaclass=ABCMeta):
         return self.categoria + " " + self.marca + " " + self.nombre + "\n\t" + self.descripcion
 
 
-class Accesorio(Producto, Vendible):
+class Accesorio(Producto):
     """Clase para Accesorio. productos que solo se pueden vender. Hereda de Producto"""
 
     def __init__(self, *args):
@@ -209,7 +244,7 @@ class Accesorio(Producto, Vendible):
         pass
 
 
-class Repuesto(Producto, Vendible):
+class Repuesto(Producto):
     """Clase para Repuesto. productos que solo se pueden vender. Hereda de Producto"""
 
     def __init__(self, *args):
@@ -222,11 +257,12 @@ class Repuesto(Producto, Vendible):
         pass
 
 
-class Instrumento(Producto, Alquilable, Vendible, metaclass=ABCMeta):
+class Instrumento(Alquilable, Producto, metaclass=ABCMeta):
     """Clase Abstracta para Instrumentos. Hereda de Producto"""
 
-    def __init__(self, *args):
-        super().__init__(*args)
+    def __init__(self, id_producto, marca, stock, categoria, descripcion, nombre, precio_venta, precio_alquiler, plazo_alquiler, multa):
+        Alquilable.__init__(self,precio_alquiler, plazo_alquiler, multa)
+        Producto.__init__(self,id_producto, marca, stock, categoria, descripcion, nombre, precio_venta)
 
     def alquilar(self):
         return 10000 + super().multa
@@ -238,9 +274,40 @@ class Instrumento(Producto, Alquilable, Vendible, metaclass=ABCMeta):
 class InstrumentoCuerda(Instrumento):
     """Clase para InstrumentoCuerda. Tipos de Instrumentos. Hereda de Instrumento"""
 
-    def __init__(self, cantidad_cuerdas, *args):
-        super().__init__(*args)
+    def __init__(self, cantidad_cuerdas, id_producto, marca, stock, categoria, descripcion, nombre, precio_venta, precio_alquiler, plazo_alquiler, multa):
+        super().__init__(id_producto, marca, stock, categoria, descripcion, nombre, precio_venta, precio_alquiler, plazo_alquiler, multa)
         self.cantidad_cuerdas = cantidad_cuerdas
+
+    @staticmethod
+    def list_all():
+        result = []
+        try:
+            file = open('instrumento_cuerda.pickle', 'rb')
+            result = pickle.load(file)
+            file.close()
+            return result
+        except IOError:
+            # TODO: propagar correctamente
+            return result
+
+    @staticmethod
+    def save(instrumento_cuerda):
+        result = []
+        try:
+            archivo = open('instrumento_cuerda.pickle', 'rb')
+            result = pickle.load(archivo)
+            archivo.close()
+            file = open('instrumento_cuerda.pickle', 'wb')
+            result.append(instrumento_cuerda)
+            pickle.dump(result, file)
+            file.close()
+        except IOError:
+            # TODO: propagar correctamente
+            file = open('instrumento_cuerda.pickle', 'wb')
+            result.append(instrumento_cuerda)
+            pickle.dump(result, file)
+            file.close()
+        return
 
     def __str__(self):
         return "Instrumento de Cuerda: " + super().__str__()
