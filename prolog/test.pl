@@ -1,27 +1,24 @@
-progenitor(magali,sally).
-progenitor(ninfa,magali).
-progenitor(ninfa,sara).
-progenitor(ninfa,mario).
-progenitor(ninfa,roque).
-progenitor(tuto,magali).
-progenitor(tuto,sara).
-progenitor(tuto,mario).
-progenitor(tuto,roque).
-progenitor(estela,ninfa).
-progenitor(dora,tuto).
-progenitor(dora,gachi).
+es_instrumento(guitarra).
+es_instrumento(bajo).
+es_instrumento(organo).
+es_instrumento(violin).
+es_instrumento(tambor).
+es_instrumento(platillos).
+es_instrumento(contrabajo).
 
-mujer(magali).
-mujer(sally).
-mujer(ninfa).
-mujer(sara).
-mujer(estela).
-mujer(dora).
-mujer(gachi).
+es_accesorio(correa).
+es_accesorio(pedalera).
+es_accesorio(porta_microfono).
+es_accesorio(afinador).
+es_accesorio(pegatina).
+es_accesorio(amplificador).
 
-hombre(NAME) :- not(mujer(NAME)).
+es_repuesto(clavijero).
+es_repuesto(cuerdas).
+es_repuesto(parches).
+es_repuesto(palillos).
+es_repuesto(cables).
 
-hermano(X,Y) :- (progenitor(Z,X),progenitor(Z,Y));(progenitor(Z,Y),progenitor(Z,X)).
-
-tio(X,Y) :- hermano(X,Z),progenitor(Z,Y).
-
+es_producto(name) :- es_repuesto(name);es_accesorio(name);es_instrumento(name).
+es_alquilable(name) :- es_instrumento(name).
+es_vendible(name) :- es_producto(name).

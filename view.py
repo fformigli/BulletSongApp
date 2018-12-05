@@ -31,37 +31,22 @@ class PersonaView(metaclass=ABCMeta):
         Label(frame, text='Cod', relief=RIDGE, anchor="w", width=5, bg='dark grey').grid(row=0, column=0, sticky=W)
         Label(frame, text='Nombre', relief=RIDGE, anchor="w", width=40, bg='dark grey').grid(row=0, column=1, sticky=W)
         Label(frame, text='RUC', relief=RIDGE, anchor="w", width=10, bg='dark grey').grid(row=0, column=2, sticky=W)
-        Label(frame, text='Nro. Telefono', relief=RIDGE, anchor="w", width=10, bg='dark grey').grid(row=0, column=3,
-                                                                                                    sticky=W)
-        Label(frame, text='Fec. Nac.', relief=RIDGE, anchor="w", width=10, bg='dark grey').grid(row=0, column=4,
-                                                                                                sticky=W)
-        Label(frame, text='Tipo Documento', relief=RIDGE, anchor="w", width=20, bg='dark grey').grid(row=0, column=5,
-                                                                                                     sticky=W)
-        Label(frame, text='Nro. Documento', relief=RIDGE, anchor="w", width=20, bg='dark grey').grid(row=0, column=6,
-                                                                                                     sticky=W)
+        Label(frame, text='Nro. Telefono', relief=RIDGE, anchor="w", width=10, bg='dark grey').grid(row=0, column=3,sticky=W)
+        Label(frame, text='Fec. Nac.', relief=RIDGE, anchor="w", width=10, bg='dark grey').grid(row=0, column=4,sticky=W)
+        Label(frame, text='Tipo Documento', relief=RIDGE, anchor="w", width=20, bg='dark grey').grid(row=0, column=5,sticky=W)
+        Label(frame, text='Nro. Documento', relief=RIDGE, anchor="w", width=20, bg='dark grey').grid(row=0, column=6,sticky=W)
 
         if lista:
             cc = 0
             for persona in lista:
                 cc += 1
-                Label(frame, text='%s' % persona.id_persona, relief=RIDGE, anchor="w", width=5).grid(row=cc, column=0,
-                                                                                                     sticky=W)
-                Label(frame, text='%s, %s' % (persona.apellido, persona.nombre), relief=RIDGE, anchor="w",
-                      width=40).grid(row=cc, column=1, sticky=W)
-                Label(frame, text='%s' % persona.ruc, relief=RIDGE, anchor="w", width=10).grid(row=cc, column=2,
-                                                                                               sticky=W)
-                Label(frame, text='%s' % persona.nro_telefono, relief=RIDGE, anchor="w", width=10).grid(row=cc,
-                                                                                                        column=3,
-                                                                                                        sticky=W)
-                Label(frame, text='%s' % persona.fecha_nacimiento, relief=RIDGE, anchor="w", width=10).grid(row=cc,
-                                                                                                            column=4,
-                                                                                                            sticky=W)
-                Label(frame, text='%s' % persona.tipo_documento, relief=RIDGE, anchor="w", width=20).grid(row=cc,
-                                                                                                          column=5,
-                                                                                                          sticky=W)
-                Label(frame, text='%s' % persona.nro_documento, relief=RIDGE, anchor="w", width=20).grid(row=cc,
-                                                                                                         column=6,
-                                                                                                         sticky=W)
+                Label(frame, text='%s' % persona.id_persona, relief=RIDGE, anchor="w", width=5).grid(row=cc, column=0,sticky=W)
+                Label(frame, text='%s, %s' % (persona.apellido, persona.nombre), relief=RIDGE, anchor="w",width=40).grid(row=cc, column=1, sticky=W)
+                Label(frame, text='%s' % persona.ruc, relief=RIDGE, anchor="w", width=10).grid(row=cc, column=2,sticky=W)
+                Label(frame, text='%s' % persona.nro_telefono, relief=RIDGE, anchor="w", width=10).grid(row=cc,column=3,sticky=W)
+                Label(frame, text='%s' % persona.fecha_nacimiento, relief=RIDGE, anchor="w", width=10).grid(row=cc,column=4,sticky=W)
+                Label(frame, text='%s' % persona.tipo_documento, relief=RIDGE, anchor="w", width=20).grid(row=cc,column=5,sticky=W)
+                Label(frame, text='%s' % persona.nro_documento, relief=RIDGE, anchor="w", width=20).grid(row=cc,column=6,sticky=W)
 
         frame.pack()
 
@@ -130,9 +115,7 @@ class ClienteView(PersonaView):
 
         Button(frame, text="Guardar", command=lambda: create_cliente(frame,eruc, eid_persona, enombre,
                                                                      eapellido, enrodocumento, combobox,
-                                                                     enrotelefono, efecnacimiento)).grid(row=10,
-                                                                                                         column=1,
-                                                                                                         pady=20)
+                                                                     enrotelefono, efecnacimiento)).grid(row=10, column=1,  pady=20)
 
         Button(frame, text="Cancelar", command=lambda: clear_frame(frame)).grid(row=10, column=2, pady=20)
 
@@ -141,31 +124,23 @@ class ClienteView(PersonaView):
 
 class EmpleadoView(PersonaView):
     """View para empleados de BulletSongApp"""
+    cc = 0
 
     @staticmethod
-    def view_salario(frame, lista):
+    def view_salarios_completo(frame, lista):
         """metodo para imprimir salario uniforme"""
-
-        clear_frame(frame)
-
         Label(frame, text='Cod', relief=RIDGE, anchor="w", width=20, bg='dark grey').grid(row=0, column=0, sticky=W)
         Label(frame, text='Nombre', relief=RIDGE, anchor="w", width=40, bg='dark grey').grid(row=0, column=1, sticky=W)
-        Label(frame, text="Salario por Categoria", relief=RIDGE, anchor="w", width=40, bg='dark grey').grid(row=0,
-                                                                                                            column=2,
-                                                                                                            sticky=W)
+        Label(frame, text="Salario por Categoria", relief=RIDGE, anchor="w", width=40, bg='dark grey').grid(row=0, column=2, sticky=W)
 
         if lista:
             cc = 0
             for empleado in lista:
+                print(empleado)
                 cc += 1
-                Label(frame, text='%s' % empleado.id_persona, relief=RIDGE, anchor="w", width=20).grid(row=cc,
-                                                                                                       column=0,
-                                                                                                       sticky=W)
-                Label(frame, text='%s, %s' % (empleado.apellido, empleado.nombre), relief=RIDGE, anchor="w",
-                      width=40).grid(row=cc, column=1, sticky=W)
-                Label(frame, text='%s' % (str(empleado.calculo_salario())), relief=RIDGE, anchor="w", width=40).grid(
-                    row=cc, column=2, sticky=W)
-        frame.pack()
+                Label(frame, text='%s' % empleado.id_persona, relief=RIDGE, anchor="w", width=20).grid(row=cc, column=0, sticky=W)
+                Label(frame, text='%s, %s' % (empleado.apellido, empleado.nombre), relief=RIDGE, anchor="w",width=40).grid(row=cc, column=1, sticky=W)
+                Label(frame, text='%s' % (str(empleado.calculo_salario())), relief=RIDGE, anchor="w", width=40).grid(row=cc, column=2, sticky=W)
 
     @staticmethod
     def view_add():
