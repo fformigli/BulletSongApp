@@ -18,30 +18,98 @@ class PersonaView(metaclass=ABCMeta):
         return input("Introduzca el codigo del registro:\n")
 
     @staticmethod
-    def view_all(list):
+    def view_all(root, lista):
         """ver todos los elementos de la lista"""
-        print("-----------------------------------------")
-        if list:
-            for persona in list:
+
+        frame = ttk.Frame(root,padding="10 10 5 5")
+        Label(frame, text='Cod', relief=RIDGE, anchor="w", width=5, bg='blue').grid(row=0, column=0, sticky=W)
+        Label(frame, text='Nombre', relief=RIDGE, anchor="w", width=40, bg='blue').grid(row=0, column=1, sticky=W)
+        Label(frame, text='RUC', relief=RIDGE, anchor="w", width=10, bg='blue').grid(row=0, column=2, sticky=W)
+        Label(frame, text='Nro. Telefono', relief=RIDGE, anchor="w", width=20, bg='blue').grid(row=0, column=3, sticky=W)
+        Label(frame, text='Fec. Nac.', relief=RIDGE, anchor="w", width=20, bg='blue').grid(row=0, column=4, sticky=W)
+        Label(frame, text='Tipo Documento', relief=RIDGE, anchor="w", width=20, bg='blue').grid(row=0, column=5, sticky=W)
+        Label(frame, text='Nro. Documento', relief=RIDGE, anchor="w", width=20, bg='blue').grid(row=0, column=6, sticky=W)
+
+        if lista:
+            cc = 0
+            for persona in lista:
                 print(persona)
+                cc+=1
+                Label(frame, text='%s' % (persona.id_persona), relief=RIDGE, anchor="w", width=5).grid(row=cc, column=0, sticky=W)
+                Label(frame, text='%s, %s' % (persona.apellido,persona.nombre), relief=RIDGE, anchor="w", width=40).grid(row=cc, column=1, sticky=W)
+                Label(frame, text='%s' % (persona.ruc), relief=RIDGE, anchor="w", width=10).grid(row=cc, column=2, sticky=W)
+                Label(frame, text='%s' % (persona.nro_telefono), relief=RIDGE, anchor="w", width=20).grid(row=cc, column=3, sticky=W)
+                Label(frame, text='%s' % (persona.fecha_nacimiento), relief=RIDGE, anchor="w", width=20).grid(row=cc, column=4, sticky=W)
+                Label(frame, text='%s' % (persona.tipo_documento), relief=RIDGE, anchor="w", width=20).grid(row=cc, column=5, sticky=W)
+                Label(frame, text='%s' % (persona.nro_documento), relief=RIDGE, anchor="w", width=20).grid(row=cc, column=6, sticky=W)
+                
+        frame.pack()
 
 
 class ClienteView(PersonaView):
     """View para los clientes de BulletSongApp"""
 
-    @staticmethod
-    def view_add():
+    def view_add(root):
         """metodo para agregar clientes"""
 
-        print("Introduzca los datos del nuevo cliente")
-        ruc = input("Introduzca el RUC del cliente:\n")
-        id_persona = input("Introduzca el codigo de cliente:\n")
-        nombre = input("Introduzca el nombre:\n")
-        apellido = input("Introduzca el apellido:\n")
-        cedula = input("Introduzca la cedula:\n")
-        tipo_documento = input("Introduzca el tipo documento:\n")
-        nro_telefono = input("Introduzca el nro de telefono:\n")
-        fecha_nacimiento = input("Introduzca la fecha de nacimiento:\n")
+        frame = ttk.Frame(root, padding="0.5i", relief=FLAT)
+        (ttk.Label(frame, text="Agregar Clientes")).grid(row=0, column=1,columnspan=2, pady=10)
+
+        (ttk.Label(frame, text="ID Persona", anchor="w", width=20)).grid(row=2, column=1)
+        eid_persona = ttk.Entry(frame)
+        eid_persona.grid(row=2, column=2)
+
+        (ttk.Label(frame, text="Nombre", anchor="w", width=20)).grid(row=3, column=1)
+        enombre = ttk.Entry(frame)
+        enombre.grid(row=3, column=2)
+
+        (ttk.Label(frame, text="Apellido", anchor="w", width=20)).grid(row=4, column=1)
+        eapellido = ttk.Entry(frame)
+        eapellido.grid(row=4, column=2)
+
+
+        (ttk.Label(frame, text="RUC", anchor="w", width=20)).grid(row=5, column=1)
+        eruc = ttk.Entry(frame)
+        eruc.grid(row=5, column=2)
+
+        (ttk.Label(frame, text="Tipo de Documento", anchor="w", width=20)).grid(row=6, column=1)
+        combobox = ttk.Combobox(frame, state='readonly')
+        combobox['values'] = ["Cedula de Identidad Paraguaya", "Pasaporte", "Otro"]
+        combobox.grid(row=6, column=2)
+
+        (ttk.Label(frame, text="Nro. Documento", anchor="w", width=20)).grid(row=7, column=1)
+        enrodocumento = ttk.Entry(frame)
+        enrodocumento.grid(row=7, column=2)
+
+        (ttk.Label(frame, text="Nro. de Telefono", anchor="w", width=20)).grid(row=8, column=1)
+        enrotelefono = ttk.Entry(frame)
+        enrotelefono.grid(row=8, column=2)
+
+        (ttk.Label(frame, text="Fecha de Nacimiento", anchor="w", width=20)).grid(row=9, column=1)
+        efecnacimiento = ttk.Entry(frame)
+        efecnacimiento.grid(row=9, column=2)
+
+        frame.bind("<Return>", (lambda event:create_cliente()))
+
+        Button(frame, text="Guardar", command=ClienteView.create_cliente(eruc, eid_persona, enombre,
+            eapellido, enrodocumento, combobox, enrotelefono, efecnacimiento)).grid(row=10, column=1, pady=20)
+
+        Button(frame, text="Cancelar", command=frame.destroy).grid(row=10, column=2,pady=20)
+
+
+        frame.pack()
+
+    @staticmethod
+    def create_cliente(eruc, eid_persona, enombre, eapellido, enrodocumento, combobox, enrotelefono, efecnacimiento):
+        """crea el cliente a partir de lo cargado en el formulario"""
+        ruc = eruc.get()
+        id_persona = eid_persona.get()
+        nombre = enombre.get()
+        apellido = eapellido.get()
+        cedula = enrodocumento.get()
+        tipo_documento = combobox.get()
+        nro_telefono = enrotelefono.get()
+        fecha_nacimiento = efecnacimiento.get()
 
         return Cliente(ruc, id_persona, nombre, apellido, cedula, tipo_documento, nro_telefono, fecha_nacimiento)
 
@@ -52,17 +120,19 @@ class EmpleadoView(PersonaView):
     @staticmethod
     def view_salario(root, lista):
         """metodo para imprimir salario uniforme"""
+
         frame = ttk.Frame(root,padding="10 10 5 5")
+        Label(frame, text='Cod', relief=RIDGE, anchor="w", width=20, bg='blue').grid(row=0, column=0, sticky=W)
+        Label(frame, text='Nombre', relief=RIDGE, anchor="w", width=40, bg='blue').grid(row=0, column=1, sticky=W)
+        Label(frame, text='Categoria\tSalario', relief=RIDGE, anchor="w", width=40, bg='blue').grid(row=0, column=2, sticky=W)
+
         if lista:
             cc = 0
             for empleado in lista:
                 cc+=1
-                lid = Label(frame, text='%s' % (empleado.id_persona), relief=RIDGE)
-                lid.grid(row=cc, column=0, sticky=W)
-                lnombre = Label(frame, text='%s, %s' % (empleado.apellido,empleado.nombre), relief=RIDGE) 
-                lnombre.grid(row=cc, column=1, sticky=W)
-                lsalario = Label(frame, text='%s' % (str(empleado.calculo_salario())), relief=RIDGE) 
-                lsalario.grid(row=cc, column=2, sticky=W)
+                Label(frame, text='%s' % (empleado.id_persona), relief=RIDGE, anchor="w", width=20).grid(row=cc, column=0, sticky=W)
+                Label(frame, text='%s, %s' % (empleado.apellido,empleado.nombre), relief=RIDGE, anchor="w", width=40).grid(row=cc, column=1, sticky=W)
+                Label(frame, text='%s' % (str(empleado.calculo_salario())), relief=RIDGE, anchor="w", width=40).grid(row=cc, column=2, sticky=W)
         frame.pack()
 
     @staticmethod

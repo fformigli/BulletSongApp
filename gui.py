@@ -17,7 +17,6 @@ class Main:
 		self.root = Tk()
 		self.root.title("BulletSongApp")
 		self.root.geometry("800x400+100+100")
-		self.root.configure(background='#0b121e')
 
 		# menubar
 		self.menubar = Menu(self.root)
@@ -26,18 +25,27 @@ class Main:
 		self.menugeneral = Menu(self.menubar,tearoff=0)
 		self.menurrhh = Menu(self.menubar,tearoff=0)
 
-		# menu commands
-		self.menugeneral.add_command(label="Clientes")
-		self.menugeneral.add_command(label="Productos")
-		self.menugeneral.add_command(label="Inventario")
+		# sub menu
+		self.submenu_clientes = Menu(self.menugeneral, tearoff=0)
 
-		self.menurrhh.add_command(label="Empleados")
+		# menu commands
+		# self.menugeneral.add_command(label="Productos")
+		# self.menugeneral.add_command(label="Inventario")
+
+		# self.menurrhh.add_command(label="Empleados")
 		self.menurrhh.add_command(label="Salarios", command=self.view_salarios_general)
 
-		# add menu headers to menu bar
+		self.submenu_clientes.add_command(label="Añadir Clientes", command=self.add_clientes)
+		self.submenu_clientes.add_command(label="Ver Clientes", command=lambda:(ClienteController()).view_all(self.root))
+
+		# add menu headers to menu bar and submenes
+		self.menugeneral.add_cascade(label="Clientes", menu=self.submenu_clientes)
 		self.menubar.add_cascade(label="Gestión", menu=self.menugeneral)
 		self.menubar.add_cascade(label="RRHH", menu=self.menurrhh)
+
 		self.menubar.add_command(label="Salir", command=self.root.destroy)
+
+		# self.status = ttk.Label(text="BulletSongApp-0.1").place(relx=0.0, rely=1.0, anchor='sw')
 
 		# add menu bar to window
 		self.root.config(menu=self.menubar)
@@ -52,6 +60,10 @@ class Main:
 		empleado_bonificado_controller.view_salarios(self.root)
 		empleado_vendedor_controller.view_salarios(self.root)
 
+
+	def add_clientes(self):
+		cliente_controller = ClienteController()
+		cliente_controller.add(self.root)
 
 
 
@@ -84,7 +96,7 @@ class Main:
 # 		self.root.bind("<Return>", (lambda event:self.authenticate(self)))
 
 # 		self.blogin = ttk.Button(self.frame, text="Entrar", command=(lambda:self.authenticate(self)))
-# 		self.blogin.grid(row=4, columnspan=2)
+# 		selfself.eruc.get().blogin.grid(row=4, columnspan=2)
 
 # 		self.bcancel = ttk.Button(self.frame, text="Cancelar", command=(lambda:self.root.destroy()))
 # 		self.bcancel.grid(row=4, column=3)

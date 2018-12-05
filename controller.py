@@ -9,13 +9,13 @@ class ClienteController:
         self.view = ClienteView
         self.cliente = Cliente
 
-    def add(self):
-        cliente = self.view.view_add()
+    def add(self, root):
+        cliente = self.view.view_add(root)
         self.cliente.save(cliente)
 
-    def view_all(self):
+    def view_all(self, root):
         clientes = self.cliente.list_all()
-        self.view.view_all(clientes)
+        self.view.view_all(root, filter(None,clientes))
 
     def search_all(self):
         target = self.view.view_get_dato()
