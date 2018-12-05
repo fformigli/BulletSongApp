@@ -30,16 +30,16 @@ class Cliente(Persona):
     def save(cliente):
         result = []
         try:
-            archivo = open('cliente.pickle', 'rb')
+            archivo = open('pickle/cliente.pickle', 'rb')
             result = pickle.load(archivo)
             archivo.close()
-            file = open('cliente.pickle', 'wb')
+            file = open('pickle/cliente.pickle', 'wb')
             result.append(cliente)
             pickle.dump(result, file)
             file.close()
         except IOError:
             # TODO: propagar correctamente
-            file = open('cliente.pickle', 'wb')
+            file = open('pickle/cliente.pickle', 'wb')
             result.append(cliente)
             pickle.dump(result, file)
             file.close()
@@ -60,7 +60,7 @@ class Cliente(Persona):
     def list_all():
         result = []
         try:
-            file = open('cliente.pickle', 'rb')
+            file = open('pickle/cliente.pickle', 'rb')
             result = pickle.load(file)
             file.close()
             return result
@@ -94,16 +94,16 @@ class Empleado(Persona):
     def save(empleado):
         result = []
         try:
-            archivo = open('empleado.pickle', 'rb')
+            archivo = open('pickle/empleado.pickle', 'rb')
             result = pickle.load(archivo)
             archivo.close()
-            file = open('empleado.pickle', 'wb')
+            file = open('pickle/empleado.pickle', 'wb')
             result.append(empleado)
             pickle.dump(result, file)
             file.close()
         except IOError:
             # TODO: propagar correctamente
-            file = open('empleado.pickle', 'wb')
+            file = open('pickle/empleado.pickle', 'wb')
             result.append(empleado)
             pickle.dump(result, file)
             file.close()
@@ -113,7 +113,7 @@ class Empleado(Persona):
     def list_all():
         result = []
         try:
-            file = open('empleado.pickle', 'rb')
+            file = open('pickle/empleado.pickle', 'rb')
             result = pickle.load(file)
             file.close()
             return result
@@ -133,13 +133,13 @@ class EmpleadoVendedor(Empleado):
         self.comision = comision
 
     def calculo_salario(self):
-        return "Vendedor\t"+str(int(int(super().salario()) + int(super().salario()) * int(self.comision)/100))
+        return "Vendedor\t\t"+str(int(int(super().salario()) + int(super().salario()) * int(self.comision)/100))
 
     @staticmethod
     def list_all():
         result = []
         try:
-            file = open('empleado_vendedor.pickle', 'rb')
+            file = open('pickle/empleado_vendedor.pickle', 'rb')
             result = pickle.load(file)
             file.close()
             return result
@@ -151,16 +151,16 @@ class EmpleadoVendedor(Empleado):
     def save(empleado):
         result = []
         try:
-            archivo = open('empleado_vendedor.pickle', 'rb')
+            archivo = open('pickle/empleado_vendedor.pickle', 'rb')
             result = pickle.load(archivo)
             archivo.close()
-            file = open('empleado_vendedor.pickle', 'wb')
+            file = open('pickle/empleado_vendedor.pickle', 'wb')
             result.append(empleado)
             pickle.dump(result, file)
             file.close()
         except IOError:
             # TODO: propagar correctamente
-            file = open('empleado_vendedor.pickle', 'wb')
+            file = open('pickle/empleado_vendedor.pickle', 'wb')
             result.append(empleado)
             pickle.dump(result, file)
             file.close()
@@ -184,7 +184,7 @@ class EmpleadoBonificado(Empleado):
     def list_all():
         result = []
         try:
-            file = open('empleado_bonificado.pickle', 'rb')
+            file = open('pickle/empleado_bonificado.pickle', 'rb')
             result = pickle.load(file)
             file.close()
             return result
@@ -196,16 +196,16 @@ class EmpleadoBonificado(Empleado):
     def save(empleado):
         result = []
         try:
-            archivo = open('empleado_bonificado.pickle', 'rb')
+            archivo = open('pickle/empleado_bonificado.pickle', 'rb')
             result = pickle.load(archivo)
             archivo.close()
-            file = open('empleado_bonificado.pickle', 'wb')
+            file = open('pickle/empleado_bonificado.pickle', 'wb')
             result.append(empleado)
             pickle.dump(result, file)
             file.close()
         except IOError:
             # TODO: propagar correctamente
-            file = open('empleado_bonificado.pickle', 'wb')
+            file = open('pickle/empleado_bonificado.pickle', 'wb')
             result.append(empleado)
             pickle.dump(result, file)
             file.close()
@@ -282,7 +282,7 @@ class InstrumentoCuerda(Instrumento):
     def list_all():
         result = []
         try:
-            file = open('instrumento_cuerda.pickle', 'rb')
+            file = open('pickle/instrumento_cuerda.pickle', 'rb')
             result = pickle.load(file)
             file.close()
             return result
@@ -294,16 +294,16 @@ class InstrumentoCuerda(Instrumento):
     def save(instrumento_cuerda):
         result = []
         try:
-            archivo = open('instrumento_cuerda.pickle', 'rb')
+            archivo = open('pickle/instrumento_cuerda.pickle', 'rb')
             result = pickle.load(archivo)
             archivo.close()
-            file = open('instrumento_cuerda.pickle', 'wb')
+            file = open('pickle/instrumento_cuerda.pickle', 'wb')
             result.append(instrumento_cuerda)
             pickle.dump(result, file)
             file.close()
         except IOError:
             # TODO: propagar correctamente
-            file = open('instrumento_cuerda.pickle', 'wb')
+            file = open('pickle/instrumento_cuerda.pickle', 'wb')
             result.append(instrumento_cuerda)
             pickle.dump(result, file)
             file.close()

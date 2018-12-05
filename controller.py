@@ -38,9 +38,9 @@ class EmpleadoController:
         empleados = self.empleado.list_all()
         self.view.view_all(empleados)
 
-    def view_salarios(self):
+    def view_salarios(self, root):
         empleados = self.empleado.list_all()
-        self.view.view_salario(empleados)
+        self.view.view_salario(root, empleados)
 
 
 class EmpleadoBonificadoController:
@@ -58,9 +58,9 @@ class EmpleadoBonificadoController:
         empleados = self.empleado_bonificacion.list_all()
         self.view.view_all(empleados)
 
-    def view_salarios(self):
+    def view_salarios(self, root):
         empleados = self.empleado_bonificacion.list_all()
-        self.view.view_salario(empleados)
+        self.view.view_salario(root, empleados)
 
 
 class EmpleadoVendedorController:
@@ -78,9 +78,9 @@ class EmpleadoVendedorController:
         empleados = self.empleado_vendedor.list_all()
         self.view.view_all(empleados)
 
-    def view_salarios(self):
+    def view_salarios(self, root):
         empleados = self.empleado_vendedor.list_all()
-        self.view.view_salario(empleados)
+        self.view.view_salario(root, empleados)
 
 
 class InstrumentoCuerdaController:

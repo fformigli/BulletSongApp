@@ -1,7 +1,9 @@
 #!/usr/bin/python
+# fformigli 2018
 
 from model import Cliente, EmpleadoBonificado, InstrumentoCuerda
 from controller import ClienteController, EmpleadoController, EmpleadoBonificadoController, EmpleadoVendedorController, InstrumentoCuerdaController
+from gui import Main
 
 
 class Application:

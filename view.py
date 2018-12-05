@@ -1,6 +1,7 @@
 from abc import ABCMeta
-
-from model import Cliente, Empleado, EmpleadoBonificado, EmpleadoVendedor, Producto, Instrumento, InstrumentoCuerda
+from tkinter import ttk
+from tkinter import *
+from model import *
 
 
 class PersonaView(metaclass=ABCMeta):
@@ -49,11 +50,20 @@ class EmpleadoView(PersonaView):
     """View para empleados de BulletSongApp"""
 
     @staticmethod
-    def view_salario(lista):
+    def view_salario(root, lista):
         """metodo para imprimir salario uniforme"""
+        frame = ttk.Frame(root,padding="10 10 5 5")
         if lista:
+            cc = 0
             for empleado in lista:
-                print(empleado.id_persona + "\t" + empleado.apellido + ", " + empleado.nombre + "\t" + str(empleado.calculo_salario()))
+                cc+=1
+                lid = Label(frame, text='%s' % (empleado.id_persona), relief=RIDGE)
+                lid.grid(row=cc, column=0, sticky=W)
+                lnombre = Label(frame, text='%s, %s' % (empleado.apellido,empleado.nombre), relief=RIDGE) 
+                lnombre.grid(row=cc, column=1, sticky=W)
+                lsalario = Label(frame, text='%s' % (str(empleado.calculo_salario())), relief=RIDGE) 
+                lsalario.grid(row=cc, column=2, sticky=W)
+        frame.pack()
 
     @staticmethod
     def view_add():
@@ -159,4 +169,3 @@ class InstrumentoCuerdaView(InstrumentoView):
         cantidad_cuerdas = input("Introduzca la cantidad de cuerdas:\n")
 
         return InstrumentoCuerda(cantidad_cuerdas, id_producto, marca, stock, categoria, descripcion, nombre, precio_venta, precio_alquiler, plazo_alquiler, multa)
-
