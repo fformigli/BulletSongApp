@@ -28,6 +28,8 @@ class Cliente(Persona):
 
     @staticmethod
     def save(cliente):
+
+        print(cliente)
         result = []
         try:
             archivo = open('pickle/cliente.pickle', 'rb')
@@ -37,13 +39,14 @@ class Cliente(Persona):
             result.append(cliente)
             pickle.dump(result, file)
             file.close()
+
         except IOError:
             # TODO: propagar correctamente
             file = open('pickle/cliente.pickle', 'wb')
             result.append(cliente)
             pickle.dump(result, file)
             file.close()
-        return
+        return True
 
     @staticmethod
     def search_all(target):
@@ -85,7 +88,7 @@ class Empleado(Persona):
         self.salario = salario
 
     def calculo_salario(self):
-        return "Asalariado\t"+str(int(self.salario))
+        return "Asalariado\t" + str(int(self.salario))
 
     def salario(self):
         return self.salario
@@ -133,7 +136,7 @@ class EmpleadoVendedor(Empleado):
         self.comision = comision
 
     def calculo_salario(self):
-        return "Vendedor\t\t"+str(int(int(super().salario()) + int(super().salario()) * int(self.comision)/100))
+        return "Vendedor\t\t" + str(int(int(super().salario()) + int(super().salario()) * int(self.comision) / 100))
 
     @staticmethod
     def list_all():
@@ -218,6 +221,9 @@ class EmpleadoBonificado(Empleado):
 class Producto(Vendible, metaclass=ABCMeta):
     """Clase abstracta para productos"""
 
+    def vender(self):
+        pass
+
     def __init__(self, id_producto, marca, stock, categoria, descripcion, nombre, precio_venta):
         super().__init__(precio_venta)
         self.id_producto = id_producto
@@ -260,9 +266,10 @@ class Repuesto(Producto):
 class Instrumento(Alquilable, Producto, metaclass=ABCMeta):
     """Clase Abstracta para Instrumentos. Hereda de Producto"""
 
-    def __init__(self, id_producto, marca, stock, categoria, descripcion, nombre, precio_venta, precio_alquiler, plazo_alquiler, multa):
-        Alquilable.__init__(self,precio_alquiler, plazo_alquiler, multa)
-        Producto.__init__(self,id_producto, marca, stock, categoria, descripcion, nombre, precio_venta)
+    def __init__(self, id_producto, marca, stock, categoria, descripcion, nombre, precio_venta, precio_alquiler,
+                 plazo_alquiler, multa):
+        Alquilable.__init__(self, precio_alquiler, plazo_alquiler, multa)
+        Producto.__init__(self, id_producto, marca, stock, categoria, descripcion, nombre, precio_venta)
 
     def alquilar(self):
         return 10000 + super().multa
@@ -274,8 +281,10 @@ class Instrumento(Alquilable, Producto, metaclass=ABCMeta):
 class InstrumentoCuerda(Instrumento):
     """Clase para InstrumentoCuerda. Tipos de Instrumentos. Hereda de Instrumento"""
 
-    def __init__(self, cantidad_cuerdas, id_producto, marca, stock, categoria, descripcion, nombre, precio_venta, precio_alquiler, plazo_alquiler, multa):
-        super().__init__(id_producto, marca, stock, categoria, descripcion, nombre, precio_venta, precio_alquiler, plazo_alquiler, multa)
+    def __init__(self, cantidad_cuerdas, id_producto, marca, stock, categoria, descripcion, nombre, precio_venta,
+                 precio_alquiler, plazo_alquiler, multa):
+        super().__init__(id_producto, marca, stock, categoria, descripcion, nombre, precio_venta, precio_alquiler,
+                         plazo_alquiler, multa)
         self.cantidad_cuerdas = cantidad_cuerdas
 
     @staticmethod

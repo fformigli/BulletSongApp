@@ -1,5 +1,6 @@
-from view import *
 from model import *
+from view import EmpleadoView, ClienteView, EmpleadoBonificadoView, EmpleadoVendedorView, InstrumentoCuerdaView, \
+    msg_guardado
 
 
 class ClienteController:
@@ -9,19 +10,14 @@ class ClienteController:
         self.view = ClienteView
         self.cliente = Cliente
 
-    def add(self, root):
-        cliente = self.view.view_add(root)
-        self.cliente.save(cliente)
+    def add(self, frame):
+        self.view.view_add(frame)
 
-    def view_all(self, root):
-        clientes = self.cliente.list_all()
-        self.view.view_all(root, filter(None,clientes))
+    def view_all(self, frame):
+        self.view.view_all(frame, filter(None, self.cliente.list_all()))
 
-    def search_all(self):
-        target = self.view.view_get_dato()
-        result = self.cliente.search_all(target)
-        self.view.view_all(result)
-
+    def search_all(self, frame):
+        self.view.view_all(frame, self.cliente.search_all(self.view.view_get_dato()))
 
 class EmpleadoController:
     """Controlador para empleados"""
@@ -31,16 +27,13 @@ class EmpleadoController:
         self.empleado = Empleado
 
     def add(self):
-        empleado = self.view.view_add()
-        self.empleado.save(empleado)
+        self.empleado.save(self.view.view_add())
 
-    def view_all(self):
-        empleados = self.empleado.list_all()
-        self.view.view_all(empleados)
+    def view_all(self, frame):
+        self.view.view_all(frame, self.empleado.list_all())
 
-    def view_salarios(self, root):
-        empleados = self.empleado.list_all()
-        self.view.view_salario(root, empleados)
+    def view_salarios(self, frame):
+        self.view.view_salario(frame, self.empleado.list_all())
 
 
 class EmpleadoBonificadoController:
@@ -51,16 +44,13 @@ class EmpleadoBonificadoController:
         self.empleado_bonificacion = EmpleadoBonificado
 
     def add(self):
-        empleado = self.view.view_add()
-        self.empleado_bonificacion.save(empleado)
+        self.empleado_bonificacion.save(self.view.view_add())
 
-    def view_all(self):
-        empleados = self.empleado_bonificacion.list_all()
-        self.view.view_all(empleados)
+    def view_all(self, frame):
+        self.view.view_all(frame, self.empleado_bonificacion.list_all())
 
-    def view_salarios(self, root):
-        empleados = self.empleado_bonificacion.list_all()
-        self.view.view_salario(root, empleados)
+    def view_salarios(self, frame):
+        self.view.view_salario(frame, self.empleado_bonificacion.list_all())
 
 
 class EmpleadoVendedorController:
@@ -71,16 +61,13 @@ class EmpleadoVendedorController:
         self.empleado_vendedor = EmpleadoVendedor
 
     def add(self):
-        empleado = self.view.view_add()
-        self.empleado_vendedor.save(empleado)
+        self.empleado_vendedor.save(self.view.view_add())
 
-    def view_all(self):
-        empleados = self.empleado_vendedor.list_all()
-        self.view.view_all(empleados)
+    def view_all(self, frame):
+        self.view.view_all(frame, self.empleado_vendedor.list_all())
 
-    def view_salarios(self, root):
-        empleados = self.empleado_vendedor.list_all()
-        self.view.view_salario(root, empleados)
+    def view_salarios(self, frame):
+        self.view.view_salario(frame, self.empleado_vendedor.list_all())
 
 
 class InstrumentoCuerdaController:
@@ -91,9 +78,7 @@ class InstrumentoCuerdaController:
         self.instrumento_cuerda = InstrumentoCuerda
 
     def add(self):
-        instrumento = self.view.view_add()
-        self.instrumento_cuerda.save(instrumento)
+        self.instrumento_cuerda.save(self.view.view_add())
 
     def view_all(self):
-        instrumentos = self.instrumento_cuerda.list_all()
-        self.view.view_all(instrumentos)
+        self.view.view_all(self.instrumento_cuerda.list_all())

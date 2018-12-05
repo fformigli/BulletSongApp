@@ -1,75 +1,70 @@
 #!/usr/bin/python
 # fformigli 2018
+from tkinter import Tk, Menu, ttk
 
-from model import Cliente, EmpleadoBonificado, InstrumentoCuerda
-from controller import ClienteController, EmpleadoController, EmpleadoBonificadoController, EmpleadoVendedorController, InstrumentoCuerdaController
-from gui import Main
+from controller import *
 
 
 class Application:
     """Aplicacion para gestion de una tienda musical"""
+    def __init__(self):
+        Main()
+
+
+class Main:
+    """Interfaz Principal"""
 
     def __init__(self):
-        self.menu()
+        self.root = Tk()
+        self.root.title("BulletSongApp")
+        self.root.geometry("900x400+100+100")
 
-    @staticmethod
-    def menu():
-        """Menu para uso de la aplicacion"""
+        self.frame = ttk.Frame(self.root, padding="10 10 5 5")
 
-        index = -1
-        while index != "0":
-            print("Menu:\n")
+        # menubar
+        self.menubar = Menu(self.root)
 
-            options = ["Ver Clientes", "Agregar Cliente", "Buscar en Clientes", "Agregar Empleado",
-                       "Agregar Empleado con Bonificacion", "Agregar Vendedor", "Calcular Salarios", "Agregar Instrumento de Cuerdas", "Ver todos los productos"]
+        # menu headers
+        self.menugeneral = Menu(self.menubar, tearoff=0)
+        self.menurrhh = Menu(self.menubar, tearoff=0)
 
-            c = 0
-            for option in options:
-                c += 1
-                print(str(c) + ".- " + option)
+        # sub menu
+        self.submenu_clientes = Menu(self.menugeneral, tearoff=0)
 
-            print("0.- Salir")
+        # menu commands
+        # self.menugeneral.add_command(label="Productos")
+        # self.menugeneral.add_command(label="Inventario")
 
-            index = input("Introduzca el numero de operacion que quiere realizar:\n")
-            cliente_controller = ClienteController()
-            empleado_controller = EmpleadoController()
-            empleado_bonificado_controller = EmpleadoBonificadoController()
-            empleado_vendedor_controller = EmpleadoVendedorController()
-            instrumento_cuerda_controller = InstrumentoCuerdaController()
+        # self.menurrhh.add_command(label="Empleados")
+        self.menurrhh.add_command(label="Salarios", command=self.view_salarios_general)
 
-            if index == "1":
-                cliente_controller.view_all()
-            elif index == "2":
-                cliente_controller.add()
-            elif index == "3":
-                cliente_controller.search_all()
+        self.submenu_clientes.add_command(label="Añadir Clientes", command=self.add_clientes)
+        self.submenu_clientes.add_command(label="Ver Clientes",
+                                          command=lambda: (ClienteController()).view_all(self.frame))
 
-            elif index == "4":
-                empleado_controller.add()
-            elif index == "5":
-                empleado_bonificado_controller.add()
-            elif index == "6":
-                empleado_vendedor_controller.add()
-            elif index == "7":
-                empleado_controller.view_salarios()
-                empleado_bonificado_controller.view_salarios()
-                empleado_vendedor_controller.view_salarios()
-            elif index == "8":
-                instrumento_cuerda_controller.add()
-            elif index == "9":
-                instrumento_cuerda_controller.view_all()
+        # add menu headers to menu bar and submenes
+        self.menugeneral.add_cascade(label="Clientes", menu=self.submenu_clientes)
+        self.menubar.add_cascade(label="Gestión", menu=self.menugeneral)
+        self.menubar.add_cascade(label="RRHH", menu=self.menurrhh)
 
-    @staticmethod
-    def cargar_listas():
-        cliente = Cliente("1043894-7", 1, "Edilda", "Formigli", "1043894", "CI", "021212121", "1965/05/29")
-        cliente.save(cliente)
+        self.menubar.add_command(label="Salir", command=self.root.destroy)
 
-        empleado_bonificacion = EmpleadoBonificado(250000, "24/08/2010", 3000000, 25, "Fernando", "Formigli",
-                                                   "5088536", "CI", "0983265381", "1995/01/01")
-        empleado_bonificacion.save(empleado_bonificacion)
+        # add menu bar to window
+        self.root.config(menu=self.menubar)
+        self.root.mainloop()
 
-        instrumento_cuerda = InstrumentoCuerda(6, 1, "Fender", 6, "Guitarra Electica", "ideal para jazz",
-                                               "Stratocaster")
+    def view_salarios_general(self):
+        empleado_controller = EmpleadoController()
+        empleado_bonificado_controller = EmpleadoBonificadoController()
+        empleado_vendedor_controller = EmpleadoVendedorController()
+
+        empleado_controller.view_salarios(self.frame)
+        empleado_bonificado_controller.view_salarios(self.frame)
+        empleado_vendedor_controller.view_salarios(self.frame)
+
+    def add_clientes(self):
+        cliente_controller = ClienteController()
+        cliente_controller.add(self.frame)
 
 
 if __name__ == '__main__':
